@@ -3,6 +3,41 @@
   Complete CSS implementation following project specifications
 */
 
+/* CSS Variables - Root Colors */
+:root {
+    /* Primary Colors */
+    --primary-orange: #f98806;
+    --primary-orange-dark: #e07805;
+    --primary-orange-light: #ffab33;
+    
+    /* Background Colors */
+    --bg-light: #f8f9fa;
+    --bg-white: #fff;
+    --bg-dark: #2c3e50;
+    
+    /* Text Colors */
+    --text-dark: #333;
+    --text-light: #fff;
+    --text-gray: #7f8c8d;
+    --text-muted: #555;
+    
+    /* Border Colors */
+    --border-orange: #f98806;
+    --border-light: #ddd;
+    
+    /* Accent Colors */
+    --success-green: #27ae60;
+    --success-green-dark: #229954;
+    --info-blue: #3498db;
+    --info-blue-dark: #2980b9;
+    --warning-yellow: #f39c12;
+    --error-red: #e74c3c;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
 /* Reset and Base Styles */
 * {
     box-sizing: border-box;
@@ -12,8 +47,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -22,13 +57,13 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #2c3e50;
-    color: #fff;
+    background-color: var(--primary-orange);
+    color: var(--text-light);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 .logo {
@@ -37,24 +72,27 @@ header {
 }
 
 .login-button {
-    background-color: #3498db;
-    color: #fff;
+    background-color: var(--bg-white);
+    color: var(--primary-orange);
     text-decoration: none;
     padding: 0.6rem 1.5rem;
     border-radius: 5px;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    border: 2px solid var(--primary-orange);
+    transition: all 0.3s ease;
 }
 
 .login-button:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-orange-dark);
+    color: var(--text-light);
+    border-color: var(--primary-orange-dark);
 }
 
 /* Navigation Styles */
 nav {
-    background-color: #34495e;
+    background-color: var(--bg-dark);
     padding: 0.8rem 2rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 nav ul {
@@ -64,14 +102,14 @@ nav ul {
 }
 
 nav ul li a {
-    color: #ecf0f1;
+    color: var(--text-light);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #3498db;
+    color: var(--primary-orange-light);
 }
 
 /* Main Content */
@@ -84,10 +122,44 @@ main {
 }
 
 main h1 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 2rem;
     font-size: 2rem;
     text-align: center;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--bg-white);
+    border: 2px solid var(--primary-orange);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.filter-section label {
+    color: var(--primary-orange);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.filter-section select {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--border-light);
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.filter-section select:focus {
+    outline: none;
+    border-color: var(--primary-orange);
 }
 
 /* Places List - Grid Layout */
@@ -100,12 +172,12 @@ main h1 {
 
 /* Place Card Styles - FIXED PARAMETERS */
 .place-card {
-    background-color: #fff;
+    background-color: var(--bg-white);
     margin: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px var(--shadow-light);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -113,17 +185,18 @@ main h1 {
 
 .place-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+    border-color: var(--primary-orange-dark);
 }
 
 .place-card h3 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 0.5rem;
     font-size: 1.3rem;
 }
 
 .place-card .price {
-    color: #27ae60;
+    color: var(--success-green);
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0.5rem 0;
@@ -138,51 +211,53 @@ main h1 {
 }
 
 .details-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
+    background-color: var(--primary-orange);
+    color: var(--text-light);
+    border: 2px solid var(--primary-orange);
     padding: 0.7rem 1.5rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     margin-top: auto;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .details-button:hover {
-    background-color: #2980b9;
+    background-color: var(--primary-orange-dark);
+    border-color: var(--primary-orange-dark);
 }
 
 /* Place Details Styles */
 .place-details {
-    background-color: #fff;
+    background-color: var(--bg-white);
     padding: 2rem;
+    border: 2px solid var(--border-orange);
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px var(--shadow-light);
     margin-bottom: 2rem;
 }
 
 .place-info h1 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 1rem;
 }
 
 .place-info .host {
-    color: #7f8c8d;
+    color: var(--text-gray);
     font-size: 1.1rem;
     margin-bottom: 1rem;
 }
 
 .place-info .price {
-    color: #27ae60;
+    color: var(--success-green);
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
 }
 
 .place-info .description {
-    color: #555;
+    color: var(--text-muted);
     line-height: 1.8;
     margin-bottom: 1.5rem;
 }
@@ -192,7 +267,7 @@ main h1 {
 }
 
 .place-info .amenities h3 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 1rem;
 }
 
@@ -205,7 +280,8 @@ main h1 {
 
 .place-info .amenities li {
     padding: 0.5rem;
-    background-color: #ecf0f1;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-orange);
     border-radius: 5px;
 }
 
@@ -215,7 +291,7 @@ main h1 {
 }
 
 #reviews h2 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
 }
@@ -228,12 +304,12 @@ main h1 {
 
 /* Review Card Styles - FIXED PARAMETERS */
 .review-card {
-    background-color: #fff;
+    background-color: var(--bg-white);
     margin: 20px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 .review-card .review-header {
@@ -245,31 +321,32 @@ main h1 {
 
 .review-card .reviewer-name {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--primary-orange);
     font-size: 1.1rem;
 }
 
 .review-card .rating {
-    color: #f39c12;
+    color: var(--warning-yellow);
     font-weight: bold;
 }
 
 .review-card .comment {
-    color: #555;
+    color: var(--text-muted);
     line-height: 1.6;
 }
 
 /* Add Review Section */
 .add-review {
-    background-color: #fff;
+    background-color: var(--bg-white);
     padding: 2rem;
+    border: 2px solid var(--border-orange);
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px var(--shadow-light);
     margin-top: 2rem;
 }
 
 .add-review h2 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 1.5rem;
 }
 
@@ -286,7 +363,7 @@ main h1 {
 }
 
 .form-group label {
-    color: #2c3e50;
+    color: var(--primary-orange);
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
@@ -295,7 +372,7 @@ main h1 {
 .form-group textarea,
 .form-group select {
     padding: 0.8rem;
-    border: 1px solid #ddd;
+    border: 2px solid var(--border-light);
     border-radius: 5px;
     font-size: 1rem;
     font-family: inherit;
@@ -306,7 +383,7 @@ main h1 {
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--primary-orange);
 }
 
 .form-group textarea {
@@ -316,45 +393,48 @@ main h1 {
 
 .form button[type="submit"],
 .form button {
-    background-color: #27ae60;
-    color: #fff;
-    border: none;
+    background-color: var(--primary-orange);
+    color: var(--text-light);
+    border: 2px solid var(--primary-orange);
     padding: 0.8rem 2rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .form button[type="submit"]:hover,
 .form button:hover {
-    background-color: #229954;
+    background-color: var(--primary-orange-dark);
+    border-color: var(--primary-orange-dark);
 }
 
 /* Login Container */
 .login-container {
     max-width: 400px;
     margin: 3rem auto;
-    background-color: #fff;
+    background-color: var(--bg-white);
     padding: 2rem;
+    border: 2px solid var(--border-orange);
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px var(--shadow-light);
 }
 
 .login-container h1 {
-    color: #2c3e50;
+    color: var(--primary-orange);
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
 /* Footer Styles */
 footer {
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
     text-align: center;
     padding: 1.5rem;
     margin-top: auto;
+    border-top: 3px solid var(--primary-orange);
 }
 
 footer p {

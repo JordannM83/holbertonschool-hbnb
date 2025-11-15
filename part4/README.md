@@ -6,32 +6,47 @@ This is the frontend implementation for the HBnB (HolbertonBnB) application. It 
 ## Project Structure
 ```
 part4/
-├── index.html           # Home page - List of places
-├── login.html           # Login form
-├── place.html           # Place details page with reviews
-├── add_review.html      # Standalone page to add a review
-├── styles.css           # Main stylesheet
-├── scripts.js           # JavaScript functionality
-├── images/              # Directory for images
-│   ├── logo.png        # Application logo
-│   ├── icon.png        # Favicon
-│   ├── place1.jpg      # Sample place images
+├── index.html                      # Home page - List of places
+├── login.html                      # Login form
+├── place.html                      # Place details page with reviews
+├── add_review.html                 # Standalone page to add a review
+├── styles.css                      # Main stylesheet
+├── scripts.js                      # JavaScript functionality
+├── images/                         # Directory for images
+│   ├── logo.png                   # Application logo
+│   ├── icon.png                   # Favicon
+│   ├── place1.jpg                 # Sample place images
 │   ├── place2.jpg
 │   ├── place3.jpg
 │   └── place4.jpg
-└── README.md           # This file
+├── README.md                       # This file
+├── IMPLEMENTATION_SUMMARY.md       # Detailed implementation notes
+├── TESTING_GUIDE.md                # Testing instructions
+├── REQUIREMENTS_VERIFICATION.md    # Requirements checklist
+└── test_index.sh                   # Automated test script
 ```
 
 ## Pages
 
-### 1. index.html - List of Places
+### 1. index.html - List of Places ✨ NEW FEATURES
+**Features:**
 - Displays all available places as cards
+- **Authentication-based UI**: Login link shows only when NOT logged in
+- **Client-side price filtering**: Filter places by price without page reload
+  - Options: All, Up to $10, Up to $50, Up to $100
 - Each card shows:
-  - Place image
-  - Place name
-  - Price per night
+  - Place title
+  - Price per night (dynamic from API)
+  - Description snippet
   - "View Details" button
 - Responsive grid layout
+- Fetches data from API with JWT authentication support
+
+**Implementation Highlights:**
+- JWT token checked on page load from cookies
+- Places fetched dynamically via Fetch API
+- Filter dropdown with instant results (no reload)
+- Field names match API: `title`, `price`, `description`
 
 ### 2. login.html - Login Form
 - Email and password input fields
@@ -41,8 +56,8 @@ part4/
 
 ### 3. place.html - Place Details
 - Displays comprehensive place information:
-  - Place name
-  - Host information
+  - Place title
+  - Host information (owner)
   - Price per night
   - Description
   - List of amenities
@@ -107,19 +122,26 @@ part4/
 
 ### Installation
 
-1. Navigate to the part4 directory:
+1. **Start the Backend Server** (Required):
 ```bash
-cd part4
+cd ../part3/hbnb
+python3 run.py
+# Server should start on http://127.0.0.1:5000
 ```
 
-2. Add images to the `images/` directory:
+2. Navigate to the part4 directory:
+```bash
+cd ../../part4
+```
+
+3. Add images to the `images/` directory:
    - `logo.png` - Your application logo
    - `icon.png` - Your favicon
-   - `place1.jpg`, `place2.jpg`, etc. - Place images
+   - `place1.jpg`, `place2.jpg`, etc. - Place images (optional)
 
-3. Open the application:
+4. Open the application:
    - Option 1: Open `index.html` directly in your browser
-   - Option 2: Use a local web server:
+   - Option 2: Use a local web server (recommended):
      ```bash
      # Using Python 3
      python3 -m http.server 8000
@@ -127,26 +149,73 @@ cd part4
      # Then visit: http://localhost:8000
      ```
 
+5. **Test the implementation**:
+```bash
+./test_index.sh
+```
+
 ### Usage
 
-1. **Browse Places**: Open `index.html` to see all available places
-2. **View Details**: Click "View Details" on any place card
-3. **Login**: Click the "Login" button in the header
-   - Enter any email and password to simulate login
-4. **Add Review**: 
-   - After logging in, visit a place details page
-   - Use the inline form at the bottom, OR
-   - Navigate to `add_review.html?place_id=1` (replace 1 with place ID)
-5. **Logout**: Click the "Logout" button in the header
+1. **Browse Places**: 
+   - Open `index.html` to see all available places
+   - Places are fetched from the API automatically
+   - Notice the login link in the header (visible when not logged in)
+
+2. **Filter Places by Price**:
+   - Use the dropdown to select a price range
+   - Options: All, Up to $10, Up to $50, Up to $100
+   - Results update instantly without page reload
+
+3. **Login**: 
+   - Click the "Login" button in the header
+   - Use test credentials: `admin@hbnb.io` / `admin1234`
+   - After login, the login link disappears
+
+4. **View Details**: 
+   - Click "View Details" on any place card
+   - See full place information with reviews
+
+5. **Add Review** (requires login):
+   - Visit a place details page while logged in
+   - Use the inline form at the bottom to add a review
+   - Include rating (1-5) and comment
+
+6. **Logout**: 
+   - Clear browser cookies or close the browser
+   - Login link will reappear on next visit
 
 ## Technical Details
 
 ### JavaScript Functionality
-- **Authentication**: Cookie-based session management
-- **Dynamic Content**: Places and reviews loaded from JavaScript arrays
+- **Authentication**: Cookie-based JWT token session management
+- **Dynamic Content**: Places fetched from API endpoint `/api/v1/places/`
+- **Client-Side Filtering**: Price filter with instant results (no page reload)
 - **Form Handling**: Login and review submission with validation
 - **URL Parameters**: Place details page reads place ID from URL
-- **Responsive UI**: Login button text changes based on auth state
+- **Responsive UI**: Login link visibility changes based on auth state
+- **API Integration**: Full REST API integration with authentication headers
+
+### Key Functions
+- `getCookie(name)` - Retrieves cookie value by name
+- `checkAuthentication()` - Verifies JWT token presence
+- `updateLoginButton()` - Shows/hides login link based on auth
+- `fetchPlaces(token)` - Fetches places from API
+- `displayPlaces(places)` - Renders place cards dynamically
+- `filterPlacesByPrice(maxPrice)` - Client-side filtering without reload
+
+### API Endpoints Used
+- **GET /api/v1/auth/login** - User authentication
+- **GET /api/v1/places/** - List all places
+- **GET /api/v1/places/{id}** - Get place details
+- **GET /api/v1/places/{id}/reviews** - Get place reviews
+- **POST /api/v1/reviews/** - Submit new review
+
+### Data Flow
+1. Page loads → Check authentication → Show/hide login link
+2. Fetch places from API → Display as cards
+3. User selects filter → Filter results client-side (instant)
+4. User clicks "View Details" → Navigate to place.html with ID
+5. User logs in → Store JWT → Hide login link → Fetch with auth
 
 ### Data Structure
 The application uses sample data stored in JavaScript:
@@ -180,6 +249,19 @@ Follow the existing pattern:
 
 ## Requirements Met
 
+### Part 4 Objectives ✓
+✓ **Main page displays list of all places** from API
+✓ **Fetch places data from API** using Fetch API with JWT authentication
+✓ **Client-side filtering by price** without page reload
+✓ **Login link visibility** based on authentication state:
+  - Shows when user is NOT authenticated
+  - Hides when user IS authenticated
+✓ **Dynamic content population** using JavaScript DOM manipulation
+✓ **Cookie-based authentication** with JWT tokens
+✓ **Event listeners** for price filter dropdown
+✓ **Authorization headers** included in API requests
+
+### Original Requirements ✓
 ✓ Semantic HTML5 elements used throughout
 ✓ Login form with email and password fields
 ✓ List of places displayed as cards
@@ -191,6 +273,13 @@ Follow the existing pattern:
 ✓ Header with logo and login button
 ✓ Footer with copyright
 ✓ Navigation bar with links
+
+## Documentation
+
+For more detailed information, see:
+- **IMPLEMENTATION_SUMMARY.md** - Complete implementation details
+- **TESTING_GUIDE.md** - Step-by-step testing instructions
+- **REQUIREMENTS_VERIFICATION.md** - Requirements checklist with code examples
 
 ## Future Enhancements
 - Connect to real backend API

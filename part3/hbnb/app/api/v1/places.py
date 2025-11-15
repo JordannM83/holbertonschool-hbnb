@@ -132,6 +132,8 @@ class PlaceList(Resource):
             place_dict = {
                 'id': place.id,
                 'title': place.title,
+                'description': place.description,
+                'price': place.price,
                 'latitude': place.latitude,
                 'longitude': place.longitude}
             result.append(place_dict)
@@ -154,6 +156,7 @@ class PlaceResource(Resource):
         return {
             'id': place.id,
             'title': place.title,
+            'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
             'description': place.description,

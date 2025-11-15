@@ -34,13 +34,11 @@ function updateLoginButton() {
     const loginLink = document.getElementById('login-link');
     if (loginLink) {
         if (checkAuthentication()) {
-            loginLink.textContent = 'Logout';
-            loginLink.href = '#';
-            loginLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                logout();
-            });
+            // Hide login link when user is authenticated
+            loginLink.style.display = 'none';
         } else {
+            // Show login link when user is not authenticated
+            loginLink.style.display = 'block';
             loginLink.textContent = 'Login';
             loginLink.href = 'login.html';
         }
@@ -85,9 +83,18 @@ async function loginUser(email, password) {
 }
 
 // Fetch Places from API
-async function fetchPlaces() {
+async function fetchPlaces(token) {
     try {
-        const response = await fetch(`${API_BASE_URL}/places/`);
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        
+        // Include token if available
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const response = await fetch(`${API_BASE_URL}/places/`, { headers });
         if (response.ok) {
             const places = await response.json();
             return places;
@@ -116,15 +123,31 @@ function displayPlaces(places) {
     places.forEach(place => {
         const card = document.createElement('div');
         card.className = 'place-card';
+        card.setAttribute('data-price', place.price || 0);
         
         card.innerHTML = `
-            <h3>${place.name || 'Unnamed Place'}</h3>
-            <p class="price">$${place.price_per_night || 0} / night</p>
+            <h3>${place.title || 'Unnamed Place'}</h3>
+            <p class="price">$${place.price || 0} / night</p>
             <p>${place.description ? place.description.substring(0, 100) + '...' : 'No description available'}</p>
             <button class="details-button" onclick="viewPlaceDetails('${place.id}')">View Details</button>
         `;
         
         placesList.appendChild(card);
+    });
+}
+
+// Filter Places by Price
+function filterPlacesByPrice(maxPrice) {
+    const placeCards = document.querySelectorAll('.place-card');
+    
+    placeCards.forEach(card => {
+        const price = parseFloat(card.getAttribute('data-price'));
+        
+        if (maxPrice === 'all' || price <= parseFloat(maxPrice)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
     });
 }
 
@@ -160,9 +183,9 @@ function displayPlaceDetails(place) {
         : '<p>No amenities listed</p>';
 
     placeInfo.innerHTML = `
-        <h1>${place.name || 'Unnamed Place'}</h1>
-        <p class="host">Host: ${place.host ? place.host.first_name + ' ' + place.host.last_name : 'Unknown'}</p>
-        <p class="price">$${place.price_per_night || 0} per night</p>
+        <h1>${place.title || 'Unnamed Place'}</h1>
+        <p class="host">Host: ${place.owner ? place.owner.first_name + ' ' + place.owner.last_name : 'Unknown'}</p>
+        <p class="price">$${place.price || 0} per night</p>
         <p class="description">${place.description || 'No description available'}</p>
         <div class="amenities">
             <h3>Amenities</h3>
@@ -307,9 +330,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Index Page - Load Places
     if (document.getElementById('places-list')) {
-        fetchPlaces().then(places => {
+        const token = getCookie('token');
+        
+        // Fetch places with token if authenticated
+        fetchPlaces(token).then(places => {
             displayPlaces(places);
         });
+        
+        // Price Filter Event Listener
+        const priceFilter = document.getElementById('price-filter');
+        if (priceFilter) {
+            priceFilter.addEventListener('change', (event) => {
+                const selectedPrice = event.target.value;
+                filterPlacesByPrice(selectedPrice);
+            });
+        }
     }
 
     // Place Details Page
@@ -394,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchPlaceDetails(placeId).then(place => {
                 const placeNameElement = document.getElementById('place-name');
                 if (placeNameElement && place) {
-                    placeNameElement.textContent = `Review for: ${place.name}`;
+                    placeNameElement.textContent = `Review for: ${place.title}`;
                 }
             });
 
