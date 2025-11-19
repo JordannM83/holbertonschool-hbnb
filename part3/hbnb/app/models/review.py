@@ -30,15 +30,3 @@ class ReviewModel(BaseModel):
         if not isinstance(rating, int) or rating < 1 or rating > 5:
             raise ValueError("Rating must be an integer between 1 and 5")
         return rating
-
-    @validates('place')
-    def validate_place(self, key, place):
-        if not isinstance(place, PlaceModel):
-            raise ValueError("Place must be a valid Place instance")
-        return place
-
-    @validates('user')
-    def validate_user(self, key, user):
-        if not isinstance(user, UserModel):
-            raise ValueError("User must be a valid User instance")
-        return user

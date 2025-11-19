@@ -140,14 +140,14 @@ class HBnBFacade:
         text = review_data.get('text')
         rating = review_data.get('rating')
 
-        user = self.user_repo.get(user_id)
-        place = self.place_repo.get(place_id)
-
-        review = ReviewModel(text=text, rating=rating, place=place, user=user)
+        # Create review with IDs, not objects
+        review = ReviewModel(
+            text=text, 
+            rating=rating, 
+            place_id=place_id, 
+            user_id=user_id
+        )
         self.review_repo.add(review)
-
-        place.reviews.append(review)
-        place.save()
         return review
 
     def get_review(self, review_id):
@@ -162,7 +162,7 @@ class HBnBFacade:
         """Business logic: Retrieve all reviews for a specific place"""
         all_reviews = self.review_repo.get_all()
         return [review for review in all_reviews
-                if review.place.id == place_id]
+                if review.place_id == place_id]
 
     def update_review(self, review_id, review_data):
         """Business logic: Update an existing review"""

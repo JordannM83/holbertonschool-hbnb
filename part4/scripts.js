@@ -34,13 +34,18 @@ function updateLoginButton() {
     const loginLink = document.getElementById('login-link');
     if (loginLink) {
         if (checkAuthentication()) {
-            // Hide login link when user is authenticated
-            loginLink.style.display = 'none';
+            // Show logout button when user is authenticated
+            loginLink.textContent = 'Logout';
+            loginLink.href = '#';
+            loginLink.onclick = (e) => {
+                e.preventDefault();
+                logout();
+            };
         } else {
             // Show login link when user is not authenticated
-            loginLink.style.display = 'block';
             loginLink.textContent = 'Login';
             loginLink.href = 'login.html';
+            loginLink.onclick = null;
         }
     }
 }
@@ -229,7 +234,7 @@ function displayReviews(reviews) {
         
         card.innerHTML = `
             <div class="review-header">
-                <span class="reviewer-name">${review.user_name || 'Anonymous'}</span>
+                <span class="reviewer-name">${review.user_name}</span>
                 <span class="rating">★ ${review.rating || 'N/A'}/5</span>
             </div>
             <p class="comment">${review.comment || review.text || 'No comment provided'}</p>

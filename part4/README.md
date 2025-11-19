@@ -118,48 +118,69 @@ part4/
 
 ### Prerequisites
 - A modern web browser (Chrome, Firefox, Safari, Edge)
-- A local web server (optional but recommended)
+- Python 3.x installed
+- Virtual environment set up in part3/hbnb
 
-### Installation
+### Quick Start
 
-1. **Start the Backend Server** (Required):
+**Simply run the startup script:**
+```bash
+cd test
+./start_servers.sh
+```
+
+This script will automatically:
+1. Stop any existing servers
+2. Free up ports 5000 and 8080
+3. Reset the database places
+4. Insert test data (users, amenities, and 5 sample places)
+5. Start the backend server (Flask) on port 5000
+6. Start the frontend server (HTTP) on port 8080
+
+Once completed, access the application at: **http://127.0.0.1:8080**
+
+### Test Credentials
+- **Admin**: admin@hbnb.io / admin1234
+- **User**: user@hbnb.io / user1234
+
+### Stopping the Servers
+```bash
+pkill -f 'python run.py' && pkill -f 'python3 -m http.server 8080'
+```
+
+### Manual Setup (Alternative)
+
+If you prefer to start services manually:
+
+1. **Start the Backend Server**:
 ```bash
 cd ../part3/hbnb
-python3 run.py
-# Server should start on http://127.0.0.1:5000
+source venv/bin/activate
+python run.py
+# Server starts on http://127.0.0.1:5000
 ```
 
-2. Navigate to the part4 directory:
+2. **Start the Frontend Server**:
 ```bash
 cd ../../part4
+python3 -m http.server 8080
+# Server starts on http://127.0.0.1:8080
 ```
 
-3. Add images to the `images/` directory:
-   - `logo.png` - Your application logo
-   - `icon.png` - Your favicon
-   - `place1.jpg`, `place2.jpg`, etc. - Place images (optional)
-
-4. Open the application:
-   - Option 1: Open `index.html` directly in your browser
-   - Option 2: Use a local web server (recommended):
-     ```bash
-     # Using Python 3
-     python3 -m http.server 8000
-     
-     # Then visit: http://localhost:8000
-     ```
-
-5. **Test the implementation**:
+3. **Insert Test Data** (if needed):
 ```bash
-./test_index.sh
+cd test
+cp insert_test_data.py ../part3/hbnb/
+cd ../part3/hbnb
+source venv/bin/activate
+python insert_test_data.py
 ```
 
 ### Usage
 
-1. **Browse Places**: 
-   - Open `index.html` to see all available places
-   - Places are fetched from the API automatically
-   - Notice the login link in the header (visible when not logged in)
+1. **Access the Application**: 
+   - Open http://127.0.0.1:8080 in your browser
+   - The home page shows all available places from the API
 
 2. **Filter Places by Price**:
    - Use the dropdown to select a price range
@@ -168,21 +189,22 @@ cd ../../part4
 
 3. **Login**: 
    - Click the "Login" button in the header
-   - Use test credentials: `admin@hbnb.io` / `admin1234`
-   - After login, the login link disappears
+   - Use test credentials: `admin@hbnb.io` / `admin1234` or `user@hbnb.io` / `user1234`
+   - After login, the login link changes to "Logout"
 
-4. **View Details**: 
+4. **View Place Details**: 
    - Click "View Details" on any place card
-   - See full place information with reviews
+   - See full information including amenities and reviews
 
 5. **Add Review** (requires login):
    - Visit a place details page while logged in
    - Use the inline form at the bottom to add a review
    - Include rating (1-5) and comment
+   - Note: You cannot review your own places
 
 6. **Logout**: 
-   - Clear browser cookies or close the browser
-   - Login link will reappear on next visit
+   - Click the "Logout" button in the header
+   - The button will change back to "Login"
 
 ## Technical Details
 

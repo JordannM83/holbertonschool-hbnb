@@ -358,5 +358,14 @@ class PlaceReviewsList(Resource):
             return {'error': 'Place not found'}, 404
 
         reviews = facade.get_reviews_by_place(place_id)
-        return [{'id': review.id, 'text': review.text, 'rating': review.rating,
-                'user_id': review.user.id} for review in reviews], 200
+        result = []
+        for review in reviews:
+            user = facade.get_user(review.user_id)
+            result.append({
+                'id': review.id,
+                'text': review.text,
+                'rating': review.rating,
+                'user_id': review.user_id,
+                'user_name': f"{user.first_name} {user.last_name}" if user else "Unknown"
+            })
+        return result, 200

@@ -69,7 +69,7 @@ class ReviewList(Resource):
                 return {'error': 'Place not found'}, 404
 
             # Check if user is trying to review their own place
-            if place.owner.id == current_user_id:
+            if place.owner_id == current_user_id:
                 return {'error': 'You cannot review your own place.'}, 400
 
             # Check if user has already reviewed this place
@@ -77,7 +77,7 @@ class ReviewList(Resource):
                 review_data['place_id']
             )
             for review in existing_reviews:
-                if review.user.id == current_user_id:
+                if review.user_id == current_user_id:
                     msg = 'You have already reviewed this place.'
                     return {'error': msg}, 400
 
@@ -87,8 +87,8 @@ class ReviewList(Resource):
                 'id': new_review.id,
                 'text': new_review.text,
                 'rating': new_review.rating,
-                'user_id': new_review.user.id,
-                'place_id': new_review.place.id
+                'user_id': new_review.user_id,
+                'place_id': new_review.place_id
             }, 201
 
         except ValueError as e:
