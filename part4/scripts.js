@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!checkAuthentication()) {
             alert('You must be logged in to add a review');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
             return;
         }
 
