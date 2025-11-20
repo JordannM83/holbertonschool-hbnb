@@ -41,12 +41,23 @@ if lsof -Pi :8080 -sTCP:LISTEN -t >/dev/null 2>&1 ; then
 fi
 echo -e "${GREEN}✓${NC} Ports 5000 and 8080 are available"
 
-# Step 3: Reset places in database
-echo -e "\n${YELLOW}[3/6]${NC} Resetting places in database..."
+# Step 3: Initialize database
+echo -e "\n${YELLOW}[3/7]${NC} Initializing database..."
 cd "$PART3_DIR"
 
 # Use Python from part3 virtual environment
 source venv/bin/activate
+
+python init_db.py
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓${NC} Database initialized successfully"
+else
+    echo -e "${RED}✗${NC} Error initializing database"
+    exit 1
+fi
+
+# Step 4: Reset places in database
+echo -e "\n${YELLOW}[4/7]${NC} Resetting places in database..."
 
 # Copy and run reset script
 cp "$TEST_DIR/reset_places.py" "$PART3_DIR/reset_places_temp.py"
@@ -59,8 +70,8 @@ else
     exit 1
 fi
 
-# Step 4: Insert test data
-echo -e "\n${YELLOW}[4/6]${NC} Inserting test data..."
+# Step 5: Insert test data
+echo -e "\n${YELLOW}[5/7]${NC} Inserting test data..."
 # Copy and run insert script
 cp "$TEST_DIR/insert_test_data.py" "$PART3_DIR/insert_test_data_temp.py"
 python insert_test_data_temp.py
@@ -72,8 +83,8 @@ else
     exit 1
 fi
 
-# Step 5: Start backend server
-echo -e "\n${YELLOW}[5/6]${NC} Starting backend server (Flask)..."
+# Step 6: Start backend server
+echo -e "\n${YELLOW}[6/7]${NC} Starting backend server (Flask)..."
 nohup python run.py > /tmp/backend.log 2>&1 &
 BACKEND_PID=$!
 sleep 3
@@ -89,8 +100,8 @@ else
     exit 1
 fi
 
-# Step 6: Start frontend server
-echo -e "\n${YELLOW}[6/6]${NC} Starting frontend server (HTTP)..."
+# Step 7: Start frontend server
+echo -e "\n${YELLOW}[7/7]${NC} Starting frontend server (HTTP)..."
 cd "$PART4_DIR"
 nohup python3 -m http.server 8080 > /tmp/frontend.log 2>&1 &
 FRONTEND_PID=$!
