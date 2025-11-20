@@ -16,7 +16,8 @@ NC='\033[0m' # No Color
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PART4_DIR="$(dirname "$SCRIPT_DIR")"
-PART3_DIR="$(dirname "$PART4_DIR")/part3/hbnb"
+ROOT_DIR="$(dirname "$PART4_DIR")"
+PART3_DIR="$ROOT_DIR/part3/hbnb"
 TEST_DIR="$SCRIPT_DIR"
 
 # Step 1: Kill existing servers
@@ -45,8 +46,8 @@ echo -e "${GREEN}✓${NC} Ports 5000 and 8080 are available"
 echo -e "\n${YELLOW}[3/7]${NC} Initializing database..."
 cd "$PART3_DIR"
 
-# Use Python from part3 virtual environment
-source venv/bin/activate
+# Use Python from project root virtual environment
+source "$ROOT_DIR/venv/bin/activate"
 
 python init_db.py
 if [ $? -eq 0 ]; then
