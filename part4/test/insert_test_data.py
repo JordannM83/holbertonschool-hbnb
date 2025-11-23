@@ -5,6 +5,7 @@ from app import create_app
 from app.models.user import UserModel
 from app.models.amenity import AmenityModel
 from app.models.place import PlaceModel
+from app.models.review import ReviewModel
 from app.persistence.repository import SQLAlchemyRepository
 from datetime import datetime
 import uuid
@@ -15,45 +16,60 @@ with app.app_context():
     user_repo = SQLAlchemyRepository(UserModel)
     amenity_repo = SQLAlchemyRepository(AmenityModel)
     place_repo = SQLAlchemyRepository(PlaceModel)
+    review_repo = SQLAlchemyRepository(ReviewModel)
     
-    # Check if admin already exists
-    existing_admin = user_repo.get_by_attribute('email', 'admin@hbnb.io')
+    # Create users with different names
+    users_data = [
+        {
+            'first_name': 'Alice',
+            'last_name': 'Johnson',
+            'email': 'alice@hbnb.io',
+            'password': 'alice1234',
+            'is_admin': True
+        },
+        {
+            'first_name': 'Bob',
+            'last_name': 'Smith',
+            'email': 'bob@hbnb.io',
+            'password': 'bob1234',
+            'is_admin': False
+        },
+        {
+            'first_name': 'Charlie',
+            'last_name': 'Brown',
+            'email': 'charlie@hbnb.io',
+            'password': 'charlie1234',
+            'is_admin': False
+        },
+        {
+            'first_name': 'Diana',
+            'last_name': 'Martinez',
+            'email': 'diana@hbnb.io',
+            'password': 'diana1234',
+            'is_admin': False
+        },
+        {
+            'first_name': 'Emma',
+            'last_name': 'Wilson',
+            'email': 'emma@hbnb.io',
+            'password': 'emma1234',
+            'is_admin': False
+        }
+    ]
     
-    if not existing_admin:
-        print("Creating admin user...")
-        # Create admin user with hashed password
-        admin = UserModel(
-            id='36c9050e-ddd3-4c3b-9731-9f487208bbc1',
-            first_name='Admin',
-            last_name='HBnB',
-            email='admin@hbnb.io',
-            is_admin=True
-        )
-        admin.hash_password('admin1234')  # Hash the password
-        user_repo.add(admin)
-        print(f"Admin user created: {admin.email}")
-    else:
-        print("Admin user already exists")
-        admin = existing_admin
-    
-    # Check if regular user exists
-    existing_user = user_repo.get_by_attribute('email', 'user@hbnb.io')
-    
-    if not existing_user:
-        print("Creating regular user...")
-        user = UserModel(
-            id='36c9050e-ddd3-4c3b-9731-9f487208bbc2',
-            first_name='User',
-            last_name='HBnB',
-            email='user@hbnb.io',
-            is_admin=False
-        )
-        user.hash_password('user1234')  # Hash the password
-        user_repo.add(user)
-        print(f"Regular user created: {user.email}")
-    else:
-        print("Regular user already exists")
-        user = existing_user
+    users = []
+    for user_data in users_data:
+        existing_user = user_repo.get_by_attribute('email', user_data['email'])
+        if not existing_user:
+            password = user_data.pop('password')
+            user = UserModel(**user_data)
+            user.hash_password(password)
+            user_repo.add(user)
+            users.append(user)
+            print(f"User created: {user.first_name} {user.last_name} ({user.email})")
+        else:
+            users.append(existing_user)
+            print(f"User already exists: {existing_user.first_name} {existing_user.last_name}")
     
     # Create amenities
     amenities_data = [
@@ -81,10 +97,10 @@ with app.app_context():
         {
             'title': 'Cozy Apartment in Paris',
             'description': 'Beautiful apartment in the heart of Paris with amazing views of the Eiffel Tower. Perfect for couples or small families.',
-            'price': 90.00,
+            'price': 95.00,
             'latitude': 48.8566,
             'longitude': 2.3522,
-            'owner_id': admin.id,
+            'owner_id': users[0].id,  # Alice
             'amenity_ids': [amenities[0].id, amenities[2].id, amenities[3].id]  # WiFi, AC, Kitchen
         },
         {
@@ -93,7 +109,7 @@ with app.app_context():
             'price': 350.00,
             'latitude': 25.7617,
             'longitude': -80.1918,
-            'owner_id': admin.id,
+            'owner_id': users[0].id,  # Alice
             'amenity_ids': [amenities[0].id, amenities[1].id, amenities[2].id, amenities[4].id]  # WiFi, Pool, AC, Parking
         },
         {
@@ -102,7 +118,7 @@ with app.app_context():
             'price': 45.00,
             'latitude': 39.7392,
             'longitude': -104.9903,
-            'owner_id': user.id,
+            'owner_id': users[1].id,  # Bob
             'amenity_ids': [amenities[0].id, amenities[3].id, amenities[4].id]  # WiFi, Kitchen, Parking
         },
         {
@@ -111,7 +127,7 @@ with app.app_context():
             'price': 200.00,
             'latitude': 40.7128,
             'longitude': -74.0060,
-            'owner_id': user.id,
+            'owner_id': users[1].id,  # Bob
             'amenity_ids': [amenities[0].id, amenities[2].id]  # WiFi, AC
         },
         {
@@ -120,11 +136,12 @@ with app.app_context():
             'price': 9.00,
             'latitude': 51.5074,
             'longitude': -0.1278,
-            'owner_id': admin.id,
+            'owner_id': users[0].id,  # Alice
             'amenity_ids': [amenities[0].id, amenities[3].id]  # WiFi, Kitchen
         },
     ]
     
+    places = []
     for place_data in places_data:
         existing_place = place_repo.get_by_attribute('title', place_data['title'])
         if not existing_place:
@@ -138,14 +155,76 @@ with app.app_context():
             
             # Add to database
             place_repo.add(place)
+            places.append(place)
             print(f"Place created: {place.title} (${place.price}/night) with {len(place_amenities)} amenities")
         else:
+            places.append(existing_place)
             print(f"Place already exists: {existing_place.title}")
     
+    # Create sample reviews
+    reviews_data = [
+        {
+            'place_id': places[0].id,  # Paris Apartment
+            'user_id': users[1].id,    # Bob reviews Alice's place
+            'text': 'Amazing apartment with stunning views! The location is perfect for exploring Paris.',
+            'rating': 5
+        },
+        {
+            'place_id': places[0].id,  # Paris Apartment
+            'user_id': users[2].id,    # Charlie reviews Alice's place
+            'text': 'Great place, very clean and comfortable. Highly recommend!',
+            'rating': 5
+        },
+        {
+            'place_id': places[1].id,  # Miami Villa
+            'user_id': users[3].id,    # Diana reviews Alice's place
+            'text': 'Absolutely beautiful villa! The pool and beach access are incredible.',
+            'rating': 5
+        },
+        {
+            'place_id': places[2].id,  # Colorado Cabin
+            'user_id': users[0].id,    # Alice reviews Bob's place
+            'text': 'Perfect getaway for nature lovers. The mountain views are breathtaking!',
+            'rating': 5
+        },
+        {
+            'place_id': places[2].id,  # Colorado Cabin
+            'user_id': users[4].id,    # Emma reviews Bob's place
+            'text': 'Cozy and rustic, exactly what we were looking for. Great hiking trails nearby.',
+            'rating': 4
+        },
+        {
+            'place_id': places[3].id,  # New York Loft
+            'user_id': users[2].id,    # Charlie reviews Bob's place
+            'text': 'Modern and stylish loft in a great location. Walking distance to everything!',
+            'rating': 5
+        },
+        {
+            'place_id': places[4].id,  # London Cottage
+            'user_id': users[3].id,    # Diana reviews Alice's place
+            'text': 'Charming cottage in a quiet area. Easy to get around London from here.',
+            'rating': 4
+        }
+    ]
+    
+    for review_data in reviews_data:
+        # Check if review already exists
+        existing_reviews = [r for r in review_repo.get_all() 
+                          if r.place_id == review_data['place_id'] and r.user_id == review_data['user_id']]
+        if not existing_reviews:
+            review = ReviewModel(**review_data)
+            review_repo.add(review)
+            print(f"Review created: {users[[u.id for u in users].index(review_data['user_id'])].first_name} reviewed {places[[p.id for p in places].index(review_data['place_id'])].title}")
+        else:
+            print(f"Review already exists")
+    
     print("\nTest data insertion completed!")
-    print("\nYou can now login with:")
-    print("  Email: admin@hbnb.io")
-    print("  Password: admin1234")
-    print("  OR")
-    print("  Email: user@hbnb.io")
-    print("  Password: user1234")
+    print("\n5 users created with different names")
+    print("5 places created with amenities")
+    print("7 reviews added across multiple places")
+    print("\nYou can login with any of these accounts:")
+    print("  Alice (admin): alice@hbnb.io / alice1234")
+    print("  Bob: bob@hbnb.io / bob1234")
+    print("  Charlie: charlie@hbnb.io / charlie1234")
+    print("  Diana: diana@hbnb.io / diana1234")
+    print("  Emma: emma@hbnb.io / emma1234")
