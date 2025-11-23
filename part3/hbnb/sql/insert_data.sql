@@ -13,6 +13,19 @@ VALUES (
     CURRENT_TIMESTAMP
 );
 
+-- Insert User - Using bcrypt-generator.com for hash bcrypt2 the password
+INSERT INTO users (id, first_name, last_name, email, password, is_admin, created_at, updated_at)
+VALUES (
+    '36c9050e-ddd3-4c3b-9731-9f487208bbc2',
+    'User',
+    'HBnB',
+    'user@hbnb.io',
+    'azerty123',
+    FALSE,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+);
+
 -- Insert Initial Amenities - Using uuidgenerator.net pour generate UUID4
 INSERT INTO amenities (id, name, created_at, updated_at)
 VALUES 

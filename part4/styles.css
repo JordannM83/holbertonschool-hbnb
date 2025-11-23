@@ -1,0 +1,473 @@
+/* 
+  HBnB Application Styles
+  Complete CSS implementation following project specifications
+*/
+
+/* CSS Variables - Root Colors */
+:root {
+    /* Primary Colors */
+    --primary-orange: #f98806;
+    --primary-orange-dark: #e07805;
+    --primary-orange-light: #ffab33;
+    
+    /* Background Colors */
+    --bg-light: #f8f9fa;
+    --bg-white: #fff;
+    --bg-dark: #2c3e50;
+    
+    /* Text Colors */
+    --text-dark: #333;
+    --text-light: #fff;
+    --text-gray: #7f8c8d;
+    --text-muted: #555;
+    
+    /* Border Colors */
+    --border-orange: #f98806;
+    --border-light: #ddd;
+    
+    /* Accent Colors */
+    --success-green: #27ae60;
+    --success-green-dark: #229954;
+    --info-blue: #3498db;
+    --info-blue-dark: #2980b9;
+    --warning-yellow: #f39c12;
+    --error-red: #e74c3c;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--primary-orange);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+.login-button {
+    background-color: var(--bg-white);
+    color: var(--primary-orange);
+    text-decoration: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 5px;
+    font-weight: 600;
+    border: 2px solid var(--primary-orange);
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: var(--primary-orange-dark);
+    color: var(--text-light);
+    border-color: var(--primary-orange-dark);
+}
+
+/* Navigation Styles */
+nav {
+    background-color: var(--bg-dark);
+    padding: 0.8rem 2rem;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--primary-orange-light);
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+main h1 {
+    color: var(--primary-orange);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--bg-white);
+    border: 2px solid var(--primary-orange);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.filter-section label {
+    color: var(--primary-orange);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.filter-section select {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid var(--border-light);
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.filter-section select:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+/* Places List - Grid Layout */
+#places-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Place Card Styles - FIXED PARAMETERS */
+.place-card {
+    background-color: var(--bg-white);
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.place-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+    border-color: var(--primary-orange-dark);
+}
+
+.place-card h3 {
+    color: var(--primary-orange);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.place-card .price {
+    color: var(--success-green);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.place-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.details-button {
+    background-color: var(--primary-orange);
+    color: var(--text-light);
+    border: 2px solid var(--primary-orange);
+    padding: 0.7rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto;
+    transition: all 0.3s ease;
+}
+
+.details-button:hover {
+    background-color: var(--primary-orange-dark);
+    border-color: var(--primary-orange-dark);
+}
+
+/* Place Details Styles */
+.place-details {
+    background-color: var(--bg-white);
+    padding: 2rem;
+    border: 2px solid var(--border-orange);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+    margin-bottom: 2rem;
+}
+
+.place-info h1 {
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+}
+
+.place-info .host {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.place-info .price {
+    color: var(--success-green);
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.place-info .description {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.place-info .amenities {
+    margin-top: 1.5rem;
+}
+
+.place-info .amenities h3 {
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+}
+
+.place-info .amenities ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.place-info .amenities li {
+    padding: 0.5rem;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-orange);
+    border-radius: 5px;
+}
+
+/* Reviews Section */
+#reviews {
+    margin-top: 2rem;
+}
+
+#reviews h2 {
+    color: var(--primary-orange);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+#reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Review Card Styles - FIXED PARAMETERS */
+.review-card {
+    background-color: var(--bg-white);
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.review-card .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.review-card .reviewer-name {
+    font-weight: bold;
+    color: var(--primary-orange);
+    font-size: 1.1rem;
+}
+
+.review-card .rating {
+    color: var(--warning-yellow);
+    font-weight: bold;
+}
+
+.review-card .comment {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Add Review Section */
+.add-review {
+    background-color: var(--bg-white);
+    padding: 2rem;
+    border: 2px solid var(--border-orange);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+    margin-top: 2rem;
+}
+
+.add-review h2 {
+    color: var(--primary-orange);
+    margin-bottom: 1.5rem;
+}
+
+/* Form Styles */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: var(--primary-orange);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 0.8rem;
+    border: 2px solid var(--border-light);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form button[type="submit"],
+.form button {
+    background-color: var(--primary-orange);
+    color: var(--text-light);
+    border: 2px solid var(--primary-orange);
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.form button[type="submit"]:hover,
+.form button:hover {
+    background-color: var(--primary-orange-dark);
+    border-color: var(--primary-orange-dark);
+}
+
+/* Login Container */
+.login-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background-color: var(--bg-white);
+    padding: 2rem;
+    border: 2px solid var(--border-orange);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px var(--shadow-light);
+}
+
+.login-container h1 {
+    color: var(--primary-orange);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+    border-top: 3px solid var(--primary-orange);
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #places-list {
+        grid-template-columns: 1fr;
+    }
+
+    .place-card {
+        margin: 10px;
+    }
+
+    .review-card {
+        margin: 10px;
+    }
+
+    main {
+        padding: 1rem;
+    }
+}

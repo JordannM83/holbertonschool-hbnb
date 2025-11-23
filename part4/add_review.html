@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Add Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html"><img src="images/logo.png" alt="HBnB Logo" class="logo"></a>
+        <a href="login.html" class="login-button" id="login-link">Login</a>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="add-review">
+            <h2>Add a Review</h2>
+            <p id="place-name" style="color: #7f8c8d; margin-bottom: 1.5rem;"></p>
+            <form class="form" id="add-review-form">
+                <div class="form-group">
+                    <label for="review-text">Your Review:</label>
+                    <textarea id="review-text" name="review-text" required placeholder="Share your experience about this place..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select a rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+                <button type="submit">Submit Review</button>
+            </form>
+            <p id="review-message" style="margin-top: 1rem; text-align: center; display: none;"></p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 HBnB. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
