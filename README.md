@@ -53,21 +53,37 @@ holbertonschool-hbnb/
 │       ├── run.py                            # Application entry point
 │       ├── requirements.txt                  # Python dependencies
 │       └── README.md                         # Part 2 documentation
-└── part3/                                      # Phase 3 - Database and Authentication
-    └── hbnb/                                  # Main application
-        ├── app/                               # Application package
-        │   ├── api/v1/                       # REST API endpoints with auth
-        │   ├── models/                       # SQLAlchemy models
-        │   ├── services/                     # Business logic (Facade)
-        │   └── persistence/                  # SQLAlchemy repository
-        ├── sql/                               # SQL schema files
-        ├── tests/                             # Test suite (51 API + 28 model + 7 persistence tests)
-        ├── init_db.py                        # Database initialization
-        ├── config.py                         # Configuration with SQLAlchemy
-        ├── run.py                            # Application entry point
-        ├── requirements.txt                  # Python dependencies
-        ├── hbnb_database_er_diagram.mmd      # Database ER diagram
-        └── README.md                         # Part 3 documentation
+├── part3/                                      # Phase 3 - Database and Authentication
+│   └── hbnb/                                  # Main application
+│       ├── venv/                              # Python virtual environment (create here)
+│       ├── app/                               # Application package
+│       │   ├── api/v1/                       # REST API endpoints with auth
+│       │   ├── models/                       # SQLAlchemy models
+│       │   ├── services/                     # Business logic (Facade)
+│       │   └── persistence/                  # SQLAlchemy repository
+│       ├── instance/                          # Database directory
+│       │   └── development.db                # SQLite database file
+│       ├── sql/                               # SQL schema files
+│       ├── tests/                             # Test suite (51 API + 28 model + 7 persistence tests)
+│       ├── init_db.py                        # Database initialization
+│       ├── config.py                         # Configuration with SQLAlchemy
+│       ├── run.py                            # Application entry point
+│       ├── requirements.txt                  # Python dependencies
+│       ├── hbnb_database_er_diagram.mmd      # Database ER diagram
+│       └── README.md                         # Part 3 documentation
+└── part4/                                      # Phase 4 - Frontend Web Application
+    ├── index.html                             # Home page with places list
+    ├── login.html                             # Login page
+    ├── place.html                             # Place details page
+    ├── add_review.html                        # Add review page
+    ├── styles.css                             # Application styles
+    ├── scripts.js                             # JavaScript functionality
+    ├── images/                                # Image assets
+    ├── test/                                  # Test scripts and utilities
+    │   ├── start_servers.sh                  # Automated startup script
+    │   ├── insert_test_data.py               # Database population script
+    │   └── reset_places.py                   # Database reset script
+    └── README.md                              # Part 4 documentation
 ```
 
 ## Implemented Features
@@ -115,7 +131,7 @@ holbertonschool-hbnb/
 
 ## Development Status
 
-### Part 1 - Design and Modeling (Completed) ✅
+### Part 1 - Design and Modeling (Completed)
 
 **UML Diagrams:**
 - High-level package diagram (Mermaid)
@@ -139,7 +155,7 @@ holbertonschool-hbnb/
 - API contracts and endpoint specifications
 - Non-functional requirements (performance, scalability, security)
 
-### Part 2 - Implementation with In-Memory Storage (Completed) ✅
+### Part 2 - Implementation with In-Memory Storage (Completed)
 
 **Business Logic Layer:**
 - Complete model implementations (User, Place, Review, Amenity)
@@ -167,7 +183,7 @@ holbertonschool-hbnb/
 - Boundary and edge case testing
 - Detailed test report documentation
 
-### Part 3 - Database and Authentication (Completed) ✅
+### Part 3 - Database and Authentication (Completed)
 
 **Database Integration:**
 - SQLAlchemy ORM implementation with declarative models
@@ -214,24 +230,41 @@ holbertonschool-hbnb/
 - Database persistence across application restarts
 - Ownership and access control verification
 
-**Recent Improvements (November 7, 2025):**
-- Added comprehensive database persistence tests (test_persistence.py)
-  - Validates data persistence across application restarts
-  - Tests unique constraints enforcement (email, user-place review)
-  - Verifies entity relationships persistence
-  - Password hashing persistence validation
-- Fixed test infrastructure
-  - Added database initialization in test_endpoint.py
-  - Proper tearDown for database cleanup between tests
-  - Made PlaceModel description field optional
-  - Simplified review deletion logic
-- Updated all documentation to reflect 86 passing tests
+### Part 4 - Frontend Web Application (Completed)
+
+**User Interface:**
+- Complete frontend implementation with HTML5, CSS3, and JavaScript
+- Responsive design with mobile and desktop support
+- Dynamic content loading from REST API
+- Client-side price filtering without page reload
+- Authentication-based UI (login/logout button visibility)
+
+**Pages:**
+- Home page with places listing and price filter
+- Login page with JWT authentication
+- Place details page with amenities and reviews
+- Add review functionality (inline and standalone)
+
+**JavaScript Features:**
+- Cookie-based JWT session management
+- Fetch API for REST API integration
+- Dynamic DOM manipulation
+- Form validation and submission
+- URL parameter handling for navigation
+
+**Integration:**
+- Full REST API integration with Part 3 backend
+- Authentication headers with JWT tokens
+- Real-time data fetching from database
+- Test data insertion scripts
+- Automated startup script for development
 
 ## Documentation
 
 - **[Part 1 Documentation](./part1/README.md)** - Design and modeling phase
 - **[Part 2 Documentation](./part2/hbnb/README.md)** - Implementation with in-memory storage
 - **[Part 3 Documentation](./part3/hbnb/README.md)** - Database and authentication implementation
+- **[Part 4 Documentation](./part4/README.md)** - Frontend web application
 
 ## Technologies
 
@@ -241,8 +274,14 @@ holbertonschool-hbnb/
 - Flask-RESTX (REST API and automatic documentation)
 - Flask-JWT-Extended (JWT authentication)
 - Flask-Bcrypt (Password hashing)
+- Flask-CORS (Cross-origin resource sharing)
 - SQLAlchemy 2.x (ORM)
 - Flask-SQLAlchemy (Flask-SQLAlchemy integration)
+
+**Frontend:**
+- HTML5 (Semantic markup)
+- CSS3 (Grid, Flexbox, Custom properties)
+- JavaScript ES6+ (Fetch API, DOM manipulation)
 
 **Database:**
 - SQLite (Development and Testing)
@@ -262,7 +301,9 @@ holbertonschool-hbnb/
 - Pytest-cov (Code coverage analysis)
 
 **Code Quality:**
-- PEP 8 compliant
+- PEP 8 compliant (Python)
+- Semistandard compliant (JavaScript)
+- W3C HTML5 and CSS3 validation
 - Type hints for better code clarity
 - Comprehensive validation and error handling
 
@@ -336,26 +377,101 @@ Project developed as part of the Holberton School curriculum, applying software 
 
 **Authors:**
 - Part 1 (Design): Jordann Miso & Mickael Mur
-- Parts 2-3 (Implementation): [Project Team]
+- Parts 2-4 (Implementation): Jordann Miso
 
 **Key Learning Outcomes:**
 - Layered architecture design and implementation
 - RESTful API development with Flask-RESTX
 - Authentication and security with JWT and Bcrypt
 - Database design and ORM with SQLAlchemy
+- Frontend development with HTML5, CSS3, and JavaScript
+- API integration with Fetch API
 - Design patterns (Facade, Repository)
 - Comprehensive testing strategies
 - API documentation with Swagger
 
 ## Getting Started
 
-To get started with the project:
+### Quick Start (Part 4 - Full Application)
 
-1. **Review Part 1** for architecture and design decisions
-2. **Run Part 2** to see the in-memory implementation
-3. **Deploy Part 3** for the full-stack application with database
+1. **Setup Virtual Environment**:
+```bash
+cd part3/hbnb
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-Each part has detailed README files with setup instructions and documentation.
+2. **Run the Application**:
+```bash
+cd ../../part4/test
+./start_servers.sh
+```
+
+This automated script will:
+- Stop existing servers and free ports
+- Initialize the database
+- Insert test data (5 users, 5 places with amenities, 7 reviews)
+- Start backend server on port 5000
+- Start frontend server on port 8080
+
+3. **Access the Application**:
+- Open http://127.0.0.1:8080 in your browser
+- Test credentials:
+  - Alice (admin): alice@hbnb.io / alice1234
+  - Bob: bob@hbnb.io / bob1234
+  - Charlie: charlie@hbnb.io / charlie1234
+  - Diana: diana@hbnb.io / diana1234
+  - Emma: emma@hbnb.io / emma1234
+
+### Running Tests
+
+**Part 3 API and Model Tests**:
+```bash
+cd part3/hbnb
+source venv/bin/activate
+python -m pytest tests/ -v
+```
+
+Test suites:
+- `test_endpoint.py` - 51 API endpoint tests
+- `test_core_classes.py` - 28 model validation tests
+- `test_persistence.py` - 7 database persistence tests
+
+Total: 86 tests, 100% success rate
+
+### Manual Setup (Alternative)
+
+If you prefer manual setup:
+
+1. **Start Backend**:
+```bash
+cd part3/hbnb
+source venv/bin/activate
+python run.py
+```
+
+2. **Start Frontend** (new terminal):
+```bash
+cd part4
+python3 -m http.server 8080
+```
+
+3. **Initialize Database** (first time only):
+```bash
+cd part3/hbnb
+source venv/bin/activate
+python init_db.py
+```
+
+### Project Parts Overview
+
+1. **Part 1** - Architecture and design decisions with UML diagrams
+2. **Part 2** - Backend implementation with in-memory storage
+3. **Part 3** - Database integration with SQLAlchemy and JWT authentication
+4. **Part 4** - Frontend web application with full API integration
+
+Each part has detailed README files with specific setup instructions.
 
 ## Interactive API Documentation
 

@@ -28,7 +28,7 @@ part4/
 
 ## Pages
 
-### 1. index.html - List of Places ✨ NEW FEATURES
+### 1. index.html - List of Places
 **Features:**
 - Displays all available places as cards
 - **Authentication-based UI**: Login link shows only when NOT logged in
@@ -79,7 +79,7 @@ part4/
 
 ## Features
 
-### Required Features ✓
+### Required Features
 - **Header**: Contains logo and login/logout button
 - **Footer**: Displays copyright information
 - **Navigation Bar**: Links to Home and Login pages
@@ -94,12 +94,6 @@ part4/
   - Padding: 10px for cards
   - Border: 1px solid #ddd for cards
   - Border Radius: 10px for cards
-
-- **Flexible Parameters** (customizable):
-  - Color Palette: Blue (#3498db), Dark Gray (#2c3e50), Green (#27ae60)
-  - Font: Arial, sans-serif
-  - Images: Placeholder images provided
-  - Favicon: icon.png included
 
 ## CSS Classes Used
 
@@ -140,8 +134,11 @@ This script will automatically:
 Once completed, access the application at: **http://127.0.0.1:8080**
 
 ### Test Credentials
-- **Admin**: admin@hbnb.io / admin1234
-- **User**: user@hbnb.io / user1234
+- Alice (admin): alice@hbnb.io / alice1234
+- Bob: bob@hbnb.io / bob1234
+- Charlie: charlie@hbnb.io / charlie1234
+- Diana: diana@hbnb.io / diana1234
+- Emma: emma@hbnb.io / emma1234
 
 ### Stopping the Servers
 ```bash
@@ -189,7 +186,7 @@ python insert_test_data.py
 
 3. **Login**: 
    - Click the "Login" button in the header
-   - Use test credentials: `admin@hbnb.io` / `admin1234` or `user@hbnb.io` / `user1234`
+   - Use test credentials
    - After login, the login link changes to "Logout"
 
 4. **View Place Details**: 
@@ -271,30 +268,30 @@ Follow the existing pattern:
 
 ## Requirements Met
 
-### Part 4 Objectives ✓
-✓ **Main page displays list of all places** from API
-✓ **Fetch places data from API** using Fetch API with JWT authentication
-✓ **Client-side filtering by price** without page reload
-✓ **Login link visibility** based on authentication state:
+### Part 4 Objectives
+- **Main page displays list of all places** from API
+- **Fetch places data from API** using Fetch API with JWT authentication
+- **Client-side filtering by price** without page reload
+- **Login link visibility** based on authentication state:
   - Shows when user is NOT authenticated
   - Hides when user IS authenticated
-✓ **Dynamic content population** using JavaScript DOM manipulation
-✓ **Cookie-based authentication** with JWT tokens
-✓ **Event listeners** for price filter dropdown
-✓ **Authorization headers** included in API requests
+- **Dynamic content population** using JavaScript DOM manipulation
+- **Cookie-based authentication** with JWT tokens
+- **Event listeners** for price filter dropdown
+- **Authorization headers** included in API requests
 
-### Original Requirements ✓
-✓ Semantic HTML5 elements used throughout
-✓ Login form with email and password fields
-✓ List of places displayed as cards
-✓ Place details page with comprehensive information
-✓ Add review form (both inline and standalone)
-✓ Required CSS classes implemented
-✓ Fixed parameters (margin, padding, border, border-radius) applied
-✓ Responsive design
-✓ Header with logo and login button
-✓ Footer with copyright
-✓ Navigation bar with links
+### Original Requirements
+- Semantic HTML5 elements used throughout
+- Login form with email and password fields
+- List of places displayed as cards
+- Place details page with comprehensive information
+- Add review form (both inline and standalone)
+- Required CSS classes implemented
+- Fixed parameters (margin, padding, border, border-radius) applied
+- Responsive design
+- Header with logo and login button
+- Footer with copyright
+- Navigation bar with links
 
 ## Documentation
 
@@ -303,19 +300,10 @@ For more detailed information, see:
 - **TESTING_GUIDE.md** - Step-by-step testing instructions
 - **REQUIREMENTS_VERIFICATION.md** - Requirements checklist with code examples
 
-## Future Enhancements
-- Connect to real backend API
-- Add user registration
-- Implement search and filter functionality
-- Add booking functionality
-- Include image galleries
-- Add user profiles
-- Implement real-time updates
-
 ## Credits
 - Design: HolbertonSchool
-- Implementation: [Your Name]
-- Images: Placeholder images (replace with your own)
+- Implementation: Jordann Miso
+- Images: Placeholder images
 
 ## License
 © 2024 HBnB. All rights reserved.
