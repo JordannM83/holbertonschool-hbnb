@@ -46,8 +46,8 @@ echo -e "${GREEN}✓${NC} Ports 5000 and 8080 are available"
 echo -e "\n${YELLOW}[3/7]${NC} Initializing database..."
 cd "$PART3_DIR"
 
-# Use Python from project root virtual environment
-source "$ROOT_DIR/venv/bin/activate"
+# Use Python from part3 virtual environment
+source venv/bin/activate
 
 python init_db.py
 if [ $? -eq 0 ]; then
